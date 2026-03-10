@@ -1,24 +1,195 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<title>Login Hospital</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema Hospital</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <style>
+        body {
+            background-color: rgba(248, 249, 250, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+        }
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .hospital-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .login-title {
+            color: rgba(52, 58, 64, 0.8);
+            font-size: 1.8em;
+            font-weight: 700;
+            margin: 0;
+        }
+        .login-subtitle {
+            color: #999;
+            font-size: 0.95em;
+            margin-top: 5px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.2);
+        }
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(52, 58, 64, 0.9);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 25px;
+        }
+        .login-button:hover {
+            background-color: rgba(52, 58, 64, 1);
+            box-shadow: 0 4px 12px rgba(52, 58, 64, 0.3);
+        }
+        .login-button:active {
+            transform: translateY(0);
+        }
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+            font-size: 0.85em;
+        }
+        .divider {
+            margin: 25px 0;
+            text-align: center;
+            color: #ddd;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
-
 <body>
 
-<h2>Ingreso al Sistema de Camas</h2>
+<div class="login-container">
+    <div class="login-header">
+        <div class="hospital-icon">🏥</div>
+        <h1 class="login-title">Hospital</h1>
+        <p class="login-subtitle">Sistema de Gestión de Camas</p>
+    </div>
 
-<form action="login.php" method="POST">
+    <form id="loginForm" action="controladores/login_control.php" method="POST">
+        
+        <div class="form-group">
+            <label for="usuario" class="form-label">👤 Usuario</label>
+            <input 
+                type="text" 
+                id="usuario" 
+                name="usuario" 
+                class="form-input" 
+                placeholder="Ingresa tu usuario"
+                required
+            >
+        </div>
 
-<label>Usuario</label>
-<input type="text" name="usuario" required>
+        <div class="form-group">
+            <label for="password" class="form-label">🔐 Contraseña</label>
+            <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                class="form-input" 
+                placeholder="Ingresa tu contraseña"
+                required
+            >
+        </div>
 
-<label>Contraseña</label>
-<input type="password" name="password" required>
+        <button type="submit" class="login-button">🔓 Ingresar</button>
 
-<button type="submit">Ingresar</button>
+    </form>
 
-</form>
+    <div class="divider">o</div>
+
+    <div class="login-footer">
+        <p>Prueba con usuario: <strong>admin</strong> / contraseña: <strong>123</strong></p>
+    </div>
+</div><script src="js/jquery-4.0.0.min.js"></script>
+<script src="js/sweetalert2.all.min.js"></script>
+<script>
+    // Verificar si hay error en la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('error')) {
+        Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: 'Usuario o contraseña incorrectos',
+            confirmButtonColor: '#667eea'
+        });
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const usuario = document.getElementById('usuario').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        // Validación
+        if (!usuario) {
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Cuidado!',
+                text: 'Olvídaste escribir el usuario',
+                confirmButtonColor: '#667eea'
+            });
+            return;
+        }
+
+        if (!password) {
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Cuidado!',
+                text: 'Olvídaste escribir la contraseña',
+                confirmButtonColor: '#667eea'
+            });
+            return;
+        }
+
+        // Enviar formulario
+        this.submit();
+    });
+</script>
 
 </body>
 </html>

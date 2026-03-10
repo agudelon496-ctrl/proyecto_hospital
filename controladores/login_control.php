@@ -1,31 +1,35 @@
 <?php
 session_start();
-require_once "config/conexion.php";
 
-$username = $_POST['username'];
-$password = $_POST['password'];
+// Obtener datos del formulario
+$usuario = isset($_POST['usuario']) ? $_POST['usuario'] : '';
+$password = isset($_POST['password']) ? $_POST['password'] : '';
 
-$sql = "SELECT * FROM usuarios WHERE username = :username AND password = :password";
+// Usuarios de prueba (en producción estos vendrían de la BD)
+$usuarios_validos = array(
+    array('usuario' => 'admin', 'password' => '123', 'rol' => 'administrador'),
+    array('usuario' => 'doctor', 'password' => '456', 'rol' => 'doctor'),
+    array('usuario' => 'enfermera', 'password' => '789', 'rol' => 'enfermera'),
+);
 
-$stmt = $conexion->prepare($sql);
+// Buscar usuario
+$usuario_encontrado = null;
+foreach($usuarios_validos as $u) {
+    if($u['usuario'] === $usuario && $u['password'] === $password) {
+        $usuario_encontrado = $u;
+        break;
+    }
+}
 
-$stmt->bindParam(":username",$username);
-$stmt->bindParam(":password",$password);
-
-$stmt->execute();
-
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if($user){
-
-$_SESSION['usuario'] = $user['username'];
-$_SESSION['rol'] = $user['rol'];
-
-header("Location: dashboard.php");
-
-}else{
-
-echo "Usuario o contraseña incorrectos";
-
+// Validar credenciales
+if($usuario_encontrado) {
+    $_SESSION['usuario'] = $usuario_encontrado['usuario'];
+    $_SESSION['rol'] = $usuario_encontrado['rol'];
+    header("Location:panel/dashboard.php");
+    exit();
+} else {
+    // Redirigir con error
+    header("Location:../index.html?error=1");
+    exit();
 }
 ?>
