@@ -1,43 +1,31 @@
 <?php
-
 session_start();
+require_once "config/conexion.php";
 
-require_once "../config/conexion.php";
+$username = $_POST['username'];
+$password = $_POST['password'];
 
-$db=(new Conexion())->conectar();
+$sql = "SELECT * FROM usuarios WHERE username = :username AND password = :password";
 
-$usuario=$_POST['usuario'];
-$password=$_POST['password'];
+$stmt = $conexion->prepare($sql);
 
-$sql="SELECT * FROM usuarios WHERE username=:usuario";
-
-$stmt=$db->prepare($sql);
-
-$stmt->bindParam(":usuario",$usuario);
+$stmt->bindParam(":username",$username);
+$stmt->bindParam(":password",$password);
 
 $stmt->execute();
 
-$user=$stmt->fetch(PDO::FETCH_ASSOC);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if($user){
 
-    if($password==$user['password']){
+$_SESSION['usuario'] = $user['username'];
+$_SESSION['rol'] = $user['rol'];
 
-        $_SESSION['usuario']=$user['username'];
-        $_SESSION['rol']=$user['fk_rol'];
-
-        header("Location: ../panel/dashboard.php");
-
-    }else{
-
-        echo "Contraseña incorrecta";
-
-    }
+header("Location: dashboard.php");
 
 }else{
 
-    echo "Usuario no encontrado";
+echo "Usuario o contraseña incorrectos";
 
 }
-
 ?>

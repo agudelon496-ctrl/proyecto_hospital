@@ -2,15 +2,12 @@
 session_start();
 
 if(!isset($_SESSION['usuario'])){
-
-header("Location: ../vistas/login.php");
-
+header("Location:index.php");
 }
 
+echo "Bienvenido ".$_SESSION['usuario'];
 ?>
 
-<h1>Bienvenido al sistema MedicarFlow</h1>
+<h2>Panel Hospital</h2>
 
-<p>Usuario: <?php echo $_SESSION['usuario']; ?></p>
-
-<a href="../logout.php">Cerrar sesión</a>
+<a href="camas.php">Ver Camas</a>
