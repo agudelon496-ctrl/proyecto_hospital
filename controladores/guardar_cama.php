@@ -1,4 +1,9 @@
 <?php
+/**
+ * Controlador para guardar datos de una cama.
+ * Actualmente solo valida sesión y recoge variables POST.
+ * TODO: implementar inserción en la base de datos.
+ */
 session_start();
 
 if(!isset($_SESSION['usuario'])){

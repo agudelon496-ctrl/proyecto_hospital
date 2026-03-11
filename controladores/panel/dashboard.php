@@ -1,3 +1,5 @@
+<!-- Panel principal del sistema.
+     Verifica sesión y muestra menú de navegación. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -61,6 +63,7 @@
 <body>
 
 <?php
+// Iniciar sesión PHP y verificar que el usuario esté autenticado
 session_start();
 
 if(!isset($_SESSION['usuario'])){

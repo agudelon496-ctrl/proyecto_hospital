@@ -1,3 +1,5 @@
+<!-- Vista que lista todas las camas con acciones básicas.
+     Los datos son estáticos de ejemplo. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -109,6 +111,7 @@
 <body>
 
 <?php
+// Iniciar sesión y validar acceso a la lista de camas
 session_start();
 
 if(!isset($_SESSION['usuario'])){
@@ -117,6 +120,7 @@ if(!isset($_SESSION['usuario'])){
 }
 
 // Datos de ejemplo (en producción vendrían de la BD)
+// Cada elemento representa una cama con campos básicos.
 $camas = array(
     array('id' => 1, 'numero' => '101', 'paciente' => 'Juan Pérez', 'edad' => 45, 'estado' => 'ocupada', 'diagnostico' => 'Fractura de pierna'),
     array('id' => 2, 'numero' => '102', 'paciente' => 'María García', 'edad' => 32, 'estado' => 'disponible', 'diagnostico' => ''),
@@ -180,7 +184,10 @@ $camas = array(
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($camas as $cama): ?>
+                    <?php
+                        // Iterar sobre todas las camas obtenidas (actualmente el arreglo de ejemplo)
+                        foreach($camas as $cama):
+                    ?>
                     <tr>
                         <td><strong><?php echo $cama['numero']; ?></strong></td>
                         <td><?php echo $cama['paciente'] ?: '—'; ?></td>

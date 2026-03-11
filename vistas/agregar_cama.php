@@ -1,3 +1,5 @@
+<!-- Vista para agregar una nueva cama.
+     Contiene un formulario con validaciones. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -90,6 +92,8 @@
 <body>
 
 <?php
+// Comprobar que exista sesión activa antes de mostrar la vista
+// Si no hay usuario logueado, redirige de vuelta al login principal.
 session_start();
 
 if(!isset($_SESSION['usuario'])){
@@ -97,6 +101,8 @@ if(!isset($_SESSION['usuario'])){
     exit();
 }
 ?>
+
+<!-- A partir de aquí se renderiza el formulario de ingreso de nueva cama -->
 
 <!-- NAVBAR DE NAVEGACIÓN -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -139,6 +145,7 @@ if(!isset($_SESSION['usuario'])){
 <div class="container">
     <div class="form-card">
         <h1 class="form-title">➕ Agregar Nueva Cama</h1>
+        <!-- Formulario principal: los datos se envían por POST a guardar_cama.php -->
         <form id="formCama" method="POST" action="../controladores/guardar_cama.php">
             
             <div class="form-group">

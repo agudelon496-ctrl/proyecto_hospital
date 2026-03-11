@@ -1,3 +1,5 @@
+<!-- Página de análisis de camas con gráficos generados por Chart.js.
+     Requiere sesión activa. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -173,6 +175,7 @@ if(!isset($_SESSION['usuario'])){
     });
 
     // Chart.js - Gráfico 1: Estado de Camas (Pie/Dona)
+    // Datos codificados; reemplazar por variables dinámicas según BD
     const ctx1 = document.getElementById('chart1').getContext('2d');
     new Chart(ctx1, {
         type: 'doughnut',
@@ -200,6 +203,7 @@ if(!isset($_SESSION['usuario'])){
     });
 
     // Chart.js - Gráfico 2: Ocupación por Piso (Bar)
+    // Cada dataset representa camas ocupadas/disponibles por piso
     const ctx2 = document.getElementById('chart2').getContext('2d');
     new Chart(ctx2, {
         type: 'bar',
@@ -240,6 +244,7 @@ if(!isset($_SESSION['usuario'])){
     });
 
     // Chart.js - Gráfico 3: Diagnósticos (Pie)
+    // Etiquetas de ejemplo; pueden provenir de consulta SQL agregando PHP
     const ctx3 = document.getElementById('chart3').getContext('2d');
     new Chart(ctx3, {
         type: 'pie',

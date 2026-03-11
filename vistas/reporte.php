@@ -1,3 +1,5 @@
+<!-- Genera un reporte HTML imprimible de las camas.
+     Incluye estadísticas y botón de impresión. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -165,6 +167,7 @@ if(!isset($_SESSION['usuario'])){
 }
 
 // Datos de camas (en producción vendrían de la BD)
+// Lista de arreglos asociativos que simulan registros de tabla 'camas'.
 $camas = array(
     array('id' => 1, 'numero' => '101', 'paciente' => 'Juan Pérez', 'edad' => 45, 'estado' => 'ocupada', 'diagnostico' => 'Fractura de pierna'),
     array('id' => 2, 'numero' => '102', 'paciente' => 'María García', 'edad' => 32, 'estado' => 'disponible', 'diagnostico' => ''),
@@ -174,8 +177,10 @@ $camas = array(
     array('id' => 6, 'numero' => '106', 'paciente' => 'Roberto Sánchez', 'edad' => 72, 'estado' => 'ocupada', 'diagnostico' => 'Infarto'),
 );
 
+// Calcular valores estadísticos para mostrar en el reporte
 $fecha_reporte = date('d/m/Y H:i');
 $total_camas = count($camas);
+// Filtrar por estado para contar grupos
 $camas_ocupadas = count(array_filter($camas, function($c) { return $c['estado'] == 'ocupada'; }));
 $camas_disponibles = count(array_filter($camas, function($c) { return $c['estado'] == 'disponible'; }));
 ?>
@@ -263,7 +268,10 @@ $camas_disponibles = count(array_filter($camas, function($c) { return $c['estado
             </tr>
         </thead>
         <tbody>
-            <?php foreach($camas as $cama): ?>
+            <?php
+            // Generar una fila por cada cama en el array
+            foreach($camas as $cama):
+    ?>
             <tr>
                 <td><strong><?php echo $cama['numero']; ?></strong></td>
                 <td><?php echo $cama['paciente'] ?: '—'; ?></td>
@@ -271,6 +279,7 @@ $camas_disponibles = count(array_filter($camas, function($c) { return $c['estado
                 <td>
                     <span class="badge badge-<?php echo $cama['estado']; ?>">
                         <?php 
+                            // Mapear código de estado a etiqueta más legible
                             $estados = array('disponible' => '✓ Disponible', 'ocupada' => '👤 Ocupada', 'mantenimiento' => '🔧 Mantenimiento');
                             echo $estados[$cama['estado']];
                         ?>

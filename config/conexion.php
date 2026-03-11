@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Clase de conexión a la base de datos usando PDO.
+ * Configura el host, nombre de BD y credenciales,
+ * y proporciona el método getConnection().
+ */
 class Conexion {
 
     private $host = "localhost";
@@ -8,6 +13,8 @@ class Conexion {
     private $password = "";
     private $conn;
 
+    // Devuelve un objeto PDO conectado a la BD.
+    // Si ocurre un error se captura y se imprime.
     public function getConnection(){
 
         $this->conn = null;

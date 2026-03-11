@@ -1,4 +1,10 @@
 <?php
+/**
+ * Controlador de login.
+ * Recibe usuario y password via POST,
+ * valida contra una lista fija (simulando BD),
+ * establece sesión y redirige o muestra error.
+ */
 session_start();
 
 // Obtener datos del formulario
